@@ -7,23 +7,20 @@ dotenv.config();
 
 const app = express();
 
-// Middleware
 app.use(cors());
 app.use(express.json());
 
-// Routes
-app.use("/api/users", require("./routes/userRoutes"));
-app.use("/api/tasks", require("./routes/taskRoutes"));
-
-
-// Connect Database
+// connect DB
 connectDB();
 
-// Routes Placeholder
+// 🔹 ADD THIS
+app.use("/api/auth", require("./routes/authRoutes"));
+// existing task routes
+app.use("/api/tasks", require("./routes/taskRoutes"));
+
 app.get("/", (req, res) => {
   res.send("SmartTask Hub API is running...");
 });
 
-// Server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
