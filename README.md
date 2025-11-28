@@ -158,3 +158,112 @@ task-hub/
 │   └── .env.example       # Sample frontend environment variables
 |
 └── README.md
+
+
+⚙️ Installation & Local Setup
+1️⃣ Clone the Repository
+git clone https://github.com/AkshayPandey/task-hub.git
+cd task-hub
+
+2️⃣ Backend Setup
+cd backend
+npm install
+
+
+Create a .env file:
+
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_secret_key
+PORT=5000
+CORS_ORIGIN=http://localhost:3000
+
+
+Start backend:
+
+npm run dev
+
+3️⃣ Frontend Setup
+cd ../frontend
+npm install
+npm start
+
+
+Create a .env file inside /frontend:
+
+REACT_APP_API_URL=http://localhost:5000/api
+
+🔥 Production Environment Variables
+Backend (Render)
+MONGO_URI=your_production_atlas_uri
+JWT_SECRET=your_secure_key
+PORT=5000
+CORS_ORIGIN=https://taskhub.vercel.app
+
+Frontend (Vercel)
+REACT_APP_API_URL=https://taskhub-api.onrender.com/api
+
+🧪 API Summary
+Auth Endpoints
+Method	Endpoint	Purpose
+POST	/api/auth/register	Register new user
+POST	/api/auth/login	Login and return JWT
+Task Endpoints (Authenticated)
+Method	Endpoint	Purpose
+GET	/api/tasks	Get all tasks
+POST	/api/tasks	Create new task
+PUT	/api/tasks/:id	Update task
+DELETE	/api/tasks/:id	Delete task
+📸 Screenshots
+
+(Add the following when ready)
+
+🖼 Login Page
+
+🖼 Register Page
+
+🖼 Dashboard
+
+🖼 Task Panel & Filters
+
+🧪 Testing & Validation Report
+
+✔ Authentication tested with valid & invalid credentials
+✔ CRUD operations verified
+✔ Responsiveness tested (Mobile + Desktop)
+✔ Cross-browser tested (Chrome, Edge)
+✔ MongoDB Atlas connection verified
+✔ Deployment tested on Vercel + Render
+
+🚀 Future Enhancements
+
+🔔 Push Notifications & Reminders
+
+🎨 Light/Dark Mode Toggle
+
+🏷 Task Categories & Priority
+
+🔄 Drag & Drop Reordering
+
+🔐 Google / OAuth Login
+
+🏁 Internship Summary
+
+This project helped in learning and implementing:
+
+Full-stack web development
+
+JWT authentication workflow
+
+Cloud deployment (Render + Vercel)
+
+Debugging, API testing & UI optimization
+
+👨‍🎓 Internship Details
+Field	Info
+Name	Akshay Pandey
+Organization	IStudio Technologies
+Duration	Oct 2025 — Dec 2025
+Institute	IIIT Naya Raipur
+🏷 Credits
+
+This application was developed as part of a professional internship under IStudio Technologies.
