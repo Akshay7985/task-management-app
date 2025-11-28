@@ -215,15 +215,14 @@ PUT	/api/tasks/:id	Update task
 DELETE	/api/tasks/:id	Delete task
 📸 Screenshots
 
-(Add the following when ready)
-
 🖼 Login Page
+<img width="1333" height="577" alt="image" src="https://github.com/user-attachments/assets/dd89f2ad-e6dd-4a8b-a93c-6821bd41a90b" />
 
 🖼 Register Page
+<img width="1338" height="611" alt="image" src="https://github.com/user-attachments/assets/5bb29e7d-d69d-4194-b9e5-be956c2ad512" />
 
 🖼 Dashboard
-
-🖼 Task Panel & Filters
+<img width="1369" height="825" alt="image" src="https://github.com/user-attachments/assets/fd7ec875-af6e-4931-8cda-345d05984e9a" />
 
 🧪 Testing & Validation Report
 
