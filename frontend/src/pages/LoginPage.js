@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { registerUser } from "../services/authService";
+import { loginUser } from "../services/authService";
 
-const RegisterPage = () => {
+const LoginPage = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    name: "",
     email: "",
     password: "",
   });
@@ -21,28 +20,29 @@ const RegisterPage = () => {
     e.preventDefault();
     setError("");
 
-    if (!formData.name || !formData.email || !formData.password) {
-      setError("Please fill all fields.");
-      return;
-    }
-
-    if (formData.password.length < 6) {
-      setError("Password should be at least 6 characters.");
+    if (!formData.email || !formData.password) {
+      setError("Please enter email and password.");
       return;
     }
 
     try {
       setLoading(true);
-      const data = await registerUser(formData);
-      console.log("Register success:", data);
-      // token is already set by authService
-      navigate("/tasks");
+
+      // Call backend
+      const data = await loginUser(formData);
+      console.log("Login success:", data);
+
+      // 🔐 Save JWT token in browser
+      localStorage.setItem("token", data.token);
+
+      // ✅ Redirect to task dashboard (use "/" or "/tasks" depending on your route)
+      navigate("/"); // or "/tasks" if that's your TaskPage route
     } catch (err) {
-      console.error("Register error:", err);
+      console.error("Login error:", err);
       if (err.response?.data?.message) {
         setError(err.response.data.message);
       } else {
-        setError("Registration failed. Please try again.");
+        setError("Login failed. Please check your credentials.");
       }
     } finally {
       setLoading(false);
@@ -53,7 +53,7 @@ const RegisterPage = () => {
     <div className="container d-flex justify-content-center mt-5">
       <div className="card shadow-sm" style={{ maxWidth: 400, width: "100%" }}>
         <div className="card-body">
-          <h3 className="card-title mb-3 text-center">Register</h3>
+          <h3 className="card-title mb-3 text-center">Login</h3>
 
           {error && (
             <div className="alert alert-danger py-2" role="alert">
@@ -62,18 +62,6 @@ const RegisterPage = () => {
           )}
 
           <form onSubmit={handleSubmit} className="d-grid gap-3">
-            <div>
-              <label className="form-label">Name</label>
-              <input
-                type="text"
-                name="name"
-                className="form-control"
-                value={formData.name}
-                onChange={handleChange}
-                placeholder="Enter your name"
-              />
-            </div>
-
             <div>
               <label className="form-label">Email</label>
               <input
@@ -94,18 +82,17 @@ const RegisterPage = () => {
                 className="form-control"
                 value={formData.password}
                 onChange={handleChange}
-                placeholder="Create a strong password"
+                placeholder="Enter your password"
               />
             </div>
 
             <button type="submit" className="btn btn-primary" disabled={loading}>
-              {loading ? "Registering..." : "Register"}
+              {loading ? "Logging in..." : "Login"}
             </button>
           </form>
 
           <p className="mt-3 text-center">
-            Already have an account?{" "}
-            <Link to="/login">Login</Link>
+            Don&apos;t have an account? <Link to="/register">Register</Link>
           </p>
         </div>
       </div>
@@ -113,4 +100,4 @@ const RegisterPage = () => {
   );
 };
 
-export default RegisterPage;
+export default LoginPage;

@@ -1,14 +1,13 @@
+// client/src/services/taskService.js
 import axios from "axios";
 
-// If you added "proxy": "http://localhost:5000" in client/package.json,
-// then baseURL "/api" will automatically go to your backend.
 const API = axios.create({
-  baseURL: "https://task-management-app-eik4.onrender.com/api",
+  baseURL:
+    process.env.REACT_APP_API_URL || "http://localhost:5000/api",
 });
 
-// Attach JWT token from localStorage (if present)
 API.interceptors.request.use((config) => {
-  const token = localStorage.getItem("token"); // we'll set this manually for now
+  const token = localStorage.getItem("token");
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
@@ -19,13 +18,11 @@ API.interceptors.request.use((config) => {
 
 export const getTasks = async () => {
   const res = await API.get("/tasks");
-  // Backend returns an array of tasks
-  return res.data;
+  return res.data; // array of tasks
 };
 
 export const createTask = async (taskData) => {
   const res = await API.post("/tasks", taskData);
-  // { message, task }
   return res.data.task;
 };
 

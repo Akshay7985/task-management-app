@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { loginUser } from "../services/authService";
+import { registerUser } from "../services/authService";
 
-const LoginPage = () => {
+const RegisterPage = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
+    name: "",
     email: "",
     password: "",
   });
@@ -20,24 +21,32 @@ const LoginPage = () => {
     e.preventDefault();
     setError("");
 
-    if (!formData.email || !formData.password) {
-      setError("Please enter email and password.");
+    if (!formData.name || !formData.email || !formData.password) {
+      setError("Please fill all fields.");
+      return;
+    }
+
+    if (formData.password.length < 6) {
+      setError("Password should be at least 6 characters.");
       return;
     }
 
     try {
       setLoading(true);
-      const data = await loginUser(formData);
-      console.log("Login success:", data);
-      // token is already saved by authService
+      const data = await registerUser(formData);
+      console.log("Register success:", data);
+      // token is already set by authService
       navigate("/tasks");
     } catch (err) {
-      console.error("Login error:", err);
-      if (err.response?.data?.message) {
-        setError(err.response.data.message);
-      } else {
-        setError("Login failed. Please check your credentials.");
-      }
+      console.error("Register error:", err);
+
+      // 🔹 Better error messages
+      const msg =
+        err?.response?.data?.message ||
+        err?.message ||
+        "Registration failed. Please try again.";
+
+      setError(msg);
     } finally {
       setLoading(false);
     }
@@ -47,7 +56,7 @@ const LoginPage = () => {
     <div className="container d-flex justify-content-center mt-5">
       <div className="card shadow-sm" style={{ maxWidth: 400, width: "100%" }}>
         <div className="card-body">
-          <h3 className="card-title mb-3 text-center">Login</h3>
+          <h3 className="card-title mb-3 text-center">Register</h3>
 
           {error && (
             <div className="alert alert-danger py-2" role="alert">
@@ -56,6 +65,18 @@ const LoginPage = () => {
           )}
 
           <form onSubmit={handleSubmit} className="d-grid gap-3">
+            <div>
+              <label className="form-label">Name</label>
+              <input
+                type="text"
+                name="name"
+                className="form-control"
+                value={formData.name}
+                onChange={handleChange}
+                placeholder="Enter your name"
+              />
+            </div>
+
             <div>
               <label className="form-label">Email</label>
               <input
@@ -76,18 +97,17 @@ const LoginPage = () => {
                 className="form-control"
                 value={formData.password}
                 onChange={handleChange}
-                placeholder="Enter your password"
+                placeholder="Create a strong password"
               />
             </div>
 
             <button type="submit" className="btn btn-primary" disabled={loading}>
-              {loading ? "Logging in..." : "Login"}
+              {loading ? "Registering..." : "Register"}
             </button>
           </form>
 
           <p className="mt-3 text-center">
-            Don&apos;t have an account?{" "}
-            <Link to="/register">Register</Link>
+            Already have an account? <Link to="/login">Login</Link>
           </p>
         </div>
       </div>
@@ -95,4 +115,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default RegisterPage;
