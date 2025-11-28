@@ -13,7 +13,7 @@ Users can register, log in, and manage their tasks with features like filtering,
 
 ## 🌐 Live Links
 
-- 🔗 **Frontend (Vercel):** https://taskhub.vercel.app  
+- 🔗 **Frontend (Vercel):** [task-management-app-nine-taupe.vercel.app](https://task-management-app-nine-taupe.vercel.app/login)
 - 🔗 **Backend API (Render):** https://taskhub-api.onrender.com  
 - 🔗 **GitHub Repository:** https://github.com/AkshayPandey/task-hub  
 
